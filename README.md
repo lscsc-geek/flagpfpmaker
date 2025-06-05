@@ -44,4 +44,4 @@ For questions or suggestions, please contact us through the links at the bottom 
 
 ---
 
-© 2023 Flag PFP Maker. All rights reserved.
+© 2025 Flag PFP Maker. All rights reserved.
