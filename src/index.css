@@ -1,0 +1,720 @@
+/* COLORS
+ *
+ * bg -     #333333
+ * layer0 - #4a4a4a
+ * layer1 - #5e5e5e
+ * black -  #111111
+ * grey -   #7d7d7d
+ * white -  #f0f0f0
+
+ * shadow - box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 30px;
+ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+
+    background-color: #333333;
+    color: #f0f0f0;
+
+    height: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+/* website fonts */
+@font-face {
+    font-family: calibri_alt;
+    src: url(assets/fonts/calibri.ttf);
+}
+@font-face {
+    font-family: robotomono_alt;
+    src: url(assets/fonts/robotomono.ttf);
+}
+@font-face {
+    font-family: minecraft;
+    src:  url(assets/fonts/minecraft.otf);
+}
+
+* {
+    font-family: minecraft;
+}
+
+/* ------------------------ */
+.verticalCenter {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.topBar {
+    width: 100%;
+    height: 75px;
+
+    background-color: #111111;
+    border-bottom: 1px solid #5e5e5e;
+}
+
+.topSub { /* shut the fuck up */
+    padding: 8px 0 0 32px;
+}
+
+.topTitle {
+    font-size: 30px;
+    font-family: robotomono_alt;
+}
+
+.topDesc {
+    color: #5e5e5e;
+    font-size: 16px;
+    font-family: robotomono_alt;
+}
+
+.prideText {
+    font-family: comic sans ms;
+    size: 12px;
+
+    animation: rainbow 3s infinite; 
+    -webkit-animation: rainbow 3s infinite;   
+    -ms-animation: rainbow 3s infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rainbow {
+    0%   {color: red;}
+    16%  {color: orange;}    
+    33%  {color: yellow;}   
+    50%  {color: lime;}
+    66%  {color: green;}
+    83%  {color: blue;}
+    100% {color: red;}
+}
+
+/* ------------------------ */
+.outerBox {
+    position: relative;
+    margin: 0 auto;
+    padding: 8px;
+    width: 95%;
+    height: auto; /* 改为自适应高度 */
+    min-height: 550px; /* 设置最小高度 */
+    text-align: center;
+    z-index: 1;
+    max-width: 1200px; /* 限制最大宽度 */
+}
+
+.mainBox {
+    padding: 12px;
+    height: auto; /* 改为自适应高度 */
+    min-height: 550px; /* 设置最小高度 */
+    background-color: #4a4a4a;
+    border-radius: 10px;
+}
+
+/* horizontal lines */
+.line {
+    background: #f0f0f0;
+    width: 80%;
+    height: 1px;
+    border: 0;
+    margin: 15px auto;
+}
+
+/* layers */
+.smallLayer,
+.mediumLayer,
+.bigLayer
+{
+    display: block;
+    padding: 15px;
+    background-color: #5e5e5e;
+    border-radius: 8px;
+    width: auto;
+    right: 12px;
+    left: 12px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 30px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.smallLayer {
+    height: auto;
+    min-height: 150px;
+}
+.mediumLayer {
+    height: auto;
+    min-height: 350px;
+}
+.bigLayer {
+    height: auto;
+    min-height: 450px;
+}
+
+/* vertically centered image solution from SO lmaooo */
+.centerImgFrame {
+    height: 100%;      /* Equals maximum image height */
+    width: 100%;
+    white-space: nowrap; /* This is required unless you put the helper span closely near the img */
+    text-align: center;
+    margin: 1em 0;
+}
+
+.centerImgHelper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.centerImg {
+    vertical-align: middle;
+}
+
+/* buttons */
+.button {
+    position: relative;
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #333333;
+    color: #f0f0f0;
+    user-select: none;
+    border: 1px solid #111111;
+    border-radius: 8px;
+    border-bottom-width: 4px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 15px;
+    top: 0px;
+    transition: background-color 0.2s;
+    margin: 5px;
+    min-width: 80px;
+    cursor: pointer;
+}
+
+.button:hover {
+    transition: background-color 0.3s ease-out;
+    background-color: #5e5e5e;
+}
+
+.button:active {
+    transition: border-bottom-width, top 0.05s;
+    border-bottom-width: 1px;
+    top: 6px;
+}
+
+/* ------------------------ / Upload Div */
+.uploadImg {
+    position: relative;
+    height: 180px;
+    width: 180px;
+    top: 0;
+    transition: 0.2s;
+}
+
+.uploadImg:hover {
+    top: -8px;
+}
+
+/* ------------------------ / Export Div */
+.exportImg {
+    height: 70%;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 30px;
+}
+
+/* ------------------------ / Editor Div */
+.editorTable {
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+    
+/* sides */
+.sideWrap {
+    padding: 0;
+    height: 100%;
+}
+
+.leftSide {
+    width: 60%;
+    vertical-align: top;
+}
+.rightSide {
+    width: 40%;
+    vertical-align: top;
+}
+
+/* flag buttons */
+.flagButtonWrapper {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+
+.flagButtonDiv {
+    margin: 12px auto;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.flagButton {
+    padding: 8px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.flagButton span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.otherFlagButton {
+    padding: 8px;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* sliders */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 80%; /* Full-width */
+    height: 10px; /* Specified height */
+    background: #333333; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 8px;
+    margin: 15px auto;
+}
+
+.slider:active, .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #f0f0f0; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 50%;
+}
+
+.slider:active::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+}
+
+.toggle {
+    display: inline-block;
+    text-align: center;
+    width: 60px;
+    height: 32px;
+    background-color: #111111;
+    border-radius: 16px;
+    transition: 0.2s;
+}
+.toggle:hover {
+    opacity: 0.8;
+}
+
+.toggleHandle {
+    position: relative;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    left: -14px;
+    border-radius: 16px;
+    background-color: #f0f0f0;
+    transition: 0.2s;
+}
+
+.toggleHandle[on='true'] {
+    left: 14px;
+}
+
+/* ------------------------ / Export Div */
+.exportDivWrapper {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 90%;
+    height: auto;
+    min-height: 450px;
+    overflow-y: auto;
+}
+
+.exportDiv {
+    position: relative;
+    display: block;
+    margin: 20px auto;
+    width: 90%;
+}
+
+/* button stylings */
+.newImgButton, .greenButton {
+    min-width: 220px;
+    min-height: 45px;
+    display: block;
+    margin: 15px auto;
+    font-size: 16px;
+    padding: 12px 20px;
+}
+
+.greenButton {
+    background-color: #2a7024;
+    transition: background-color 0.2s;
+    padding: 12px 20px;
+    font-weight: bold;
+}
+
+.greenButton:hover {
+    background-color: #41963a;
+}
+
+/* ------------------------ / The canvases */
+.pfpPreview {
+    display: block;
+    margin: 0 auto;
+    padding-top: 8px;
+    width: 300px; /* 固定宽度 */
+    height: 300px; /* 固定高度 */
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 15px;
+}
+
+.pfpModePreview {
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+}
+
+/* NEW STYLES */
+
+/* Hero Section */
+.hero-section {
+    padding: 30px 20px;
+    text-align: center;
+    background-color: #111111;
+    margin-bottom: 0;
+}
+
+.hero-section h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
+.hero-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #f0f0f0;
+}
+
+.hero-tool {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Rules Section */
+.rules-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #333333; /* 与hero区域保持一致 */
+    margin-top: 20px;
+    border-top: 1px solid #5e5e5e;
+}
+
+.rules-section h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #f0f0f0;
+}
+
+.rules-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.rule-item {
+    background-color: #4a4a4a;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 30px;
+    transition: transform 0.3s ease;
+}
+
+.rule-item:hover {
+    transform: translateY(-5px);
+}
+
+.rule-item h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
+.rule-item p {
+    font-size: 16px;
+    color: #f0f0f0;
+    line-height: 1.5;
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #4a4a4a; /* 与规则部分交替使用颜色 */
+    /* margin-bottom: 30px; */
+    border-top: 1px solid #5e5e5e;
+}
+
+.faq-section h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #f0f0f0;
+}
+
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 15px;
+    transition: transform 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-5px);
+}
+
+.faq-item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
+.faq-item p {
+    font-size: 16px;
+    color: #f0f0f0;
+    line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+    background-color: #111111;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: #f0f0f0;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-copyright p {
+    color: #5e5e5e;
+    font-size: 14px;
+}
+
+/* Highlight class for flag pfp maker keyword */
+.highlight {
+    color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Button Text Definitions */
+.btn-text-default-image-zoom:before {
+    content: "Default Image\AZoom";
+    white-space: pre;
+}
+
+.btn-text-default-ring-scale:before {
+    content: "Default\ARing Scale";
+    white-space: pre;
+}
+
+.btn-text-center-image-position:before {
+    content: "Center Image\APosition";
+    white-space: pre;
+}
+
+.btn-text-choose-new-image:before {
+    content: "Choose New Image";
+}
+
+.btn-text-export-open-image:before {
+    content: "Export and Open Image";
+}
+
+.btn-text-continue:before {
+    content: "Continue";
+}
+
+.btn-text-editing:before {
+    content: "Editing";
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .editorTable {
+        display: block;
+    }
+    
+    .leftSide, .rightSide {
+        display: block;
+        width: 100%;
+    }
+    
+    .outerBox {
+        height: auto;
+        min-height: 900px;
+    }
+    
+    .sideWrap {
+        margin-bottom: 20px;
+    }
+    
+    .mediumLayer, .smallLayer {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rules-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .rule-item {
+        width: 100%;
+        max-width: 400px;
+        margin-bottom: 15px;
+    }
+    
+    .hero-section h1 {
+        font-size: 28px;
+    }
+    
+    .hero-section p {
+        font-size: 16px;
+    }
+    
+    .outerBox {
+        padding: 0;
+        width: 100%;
+    }
+}
+
+/* Privacy Policy and Terms of Service Styles */
+.privacy-section {
+    padding: 40px 20px;
+    background-color: #333333;
+    min-height: calc(100vh - 135px - 100px); /* 100vh - (header height + footer height) */
+}
+
+.privacy-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #4a4a4a;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 30px;
+}
+
+.privacy-container h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #f0f0f0;
+}
+
+.policy-section {
+    margin-bottom: 30px;
+}
+
+.policy-section h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #f0f0f0;
+    border-bottom: 1px solid #5e5e5e;
+    padding-bottom: 8px;
+}
+
+.policy-section p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #f0f0f0;
+    margin-bottom: 15px;
+}
+
+.policy-section ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.policy-section li {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #f0f0f0;
+    margin-bottom: 8px;
+}
+
+.policy-section a {
+    color: #57c6ff;
+    text-decoration: none;
+}
+
+.policy-section a:hover {
+    text-decoration: underline;
+}
+
+.policy-footer {
+    margin-top: 50px;
+    text-align: center;
+    color: #7d7d7d;
+    font-size: 14px;
+}

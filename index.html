@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flag PFP Maker</title>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=0.5'>
+
+        <link rel='stylesheet' href='src/index.css'>
+        <link rel='stylesheet' href='src/modern.css'>
+        <link rel='shortcut icon' href='src/assets/favicon_16.png' type='image/png'>
+        <link rel='apple-touch-icon' href='src/assets/logo_128.png'>
+        <link rel='image_src' href='src/assets/logo_128.png'> 
+        <meta property='og:type' content='website'>
+        <meta property='og:title' content='Flag PFP Maker'>
+        <meta property='og:description' content='Create profile pictures with flag overlays'>
+
+        <meta name='description' content='Create profile pictures with flag overlays'>
+        <meta name='keywords' content='flag, flag pfp maker, flag icon maker, flag pfp, flag icon'>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- PfpPride scripts -->
+        <script src='src/pfppride/pfppride.js'></script>
+        <script src='src/pfppride/presetflags.js'></script>
+        <script src='src/pfppride/editor.js'></script>
+    </head>
+
+    <body class="modern-body">
+
+        <!-- Top bar -->
+        <div class='topBar modern-topbar'>
+            <div class='topSub'>
+                <span class='topTitle'>
+                    <img src='src/assets/favicon_24.png'>
+                    <a href="index.html" class="titleLink"><i class='topTitle'>Flag PFP Maker</i></a>
+                </span>
+            </div>
+        </div>
+
+        <!-- Hero Section with Tool -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>Flag PFP Maker</h1>
+                <p>Create beautiful profile pictures with flag overlays in seconds!</p>
+            </div>
+            
+            <div class="hero-tool">
+                <!-- Main tool will be placed here -->
+                <div class='outerBox'>
+                    <!-- Editor div -->
+                    <div id='editorDiv' class='mainBox'>
+                        <table class='editorTable'>
+                            <tr>
+                                <!-- Left side -->
+                                <td class='leftSide'>
+                                <div class='sideWrap'>
+
+                                    <!-- Preview -->
+                                    <div class='mediumLayer'>
+                                        <span>
+                                            This is your profile pic with <span class="highlight">Flag PFP Maker</span>!<br>
+                                            Drag it to move the image position!
+                                        </span>
+                                        <hr class='line'>
+
+                                        <canvas id='mainCanvas' class='pfpPreview' width='500' height='500'></canvas>
+                                        <button id='chooseNewButton' class='button newImgButton prominentButton'>
+                                            Choose New Image
+                                        </button>
+                                    </div>
+                                    
+
+                                    <!-- Choose New Image button moved here for better visibility -->
+                                    
+                                    
+
+                                    <!-- Flag Select -->
+                                    <div class='smallLayer'>
+                                        <span>Change the flag with <span class="highlight">Flag PFP Maker</span>!</span>
+                                        <hr class='line'>
+
+                                        <div id='flagButtonDiv' class='flagButtonDiv'>
+                                            <!-- Custom flag image input -->
+                                            <input type='file' id='otherFlagInput' style='display: none'>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </td>
+
+                                <!-- Right side -->
+                                <td class='rightSide'>
+                                <div class='sideWrap'>
+                                    
+                                    <!-- Settings -->
+                                    <div class='bigLayer'>
+                                        <div class='exportDivWrapper'>
+                                            <span><span class="highlight">Flag PFP Maker</span> settings!</span>
+                                            <hr class='line'>
+
+                                            <div>
+                                                <!-- Image scale -->
+                                                <span>Image zoom</span>
+                                                <br>
+                                                <input type='range' id='imgScaleInput' class='slider' min='0' max='3' step='0.025'>
+                                                <br>
+
+                                                <!-- Ring scale -->
+                                                <span>Ring scale</span>
+                                                <br>
+                                                <input type='range' id='ringScaleInput' class='slider' min='0' max='1' step='0.025'>
+                                                <br>
+                                            </div>
+                                            <br>
+
+                                            <div class='flagButtonDiv'>
+                                                <!-- Reset image scale -->
+                                                <div id='resetImageScaleButton' class='button otherFlagButton'>
+                                                    <span>Default Image<br>Zoom</span>
+                                                </div>
+
+                                                <!-- Reset ring scale -->
+                                                <div id='resetRingScaleButton' class='button otherFlagButton'>
+                                                    <span>Default<br>Ring Scale</span>
+                                                </div>
+
+                                                <!-- Reset image offset -->
+                                                <div id='resetDragOffButton' class='button otherFlagButton'>
+                                                    <span>Center Image<br>Position</span>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <br>
+
+                                            <div class='flagButtonDiv'>
+                                                <!-- Flag mode text -->
+                                                <span id='flagModeText'>flag mode: ring</span>
+
+                                                <div class='verticalCenter'>
+                                                    <!-- Flag mode toggle -->
+                                                    <div id='flagModeToggle' class='toggle'>
+                                                        <div id='flagModeToggleHandle' class='toggleHandle'></div>
+                                                    </div>
+                                                    <!-- Flag mode preview canvas -->
+                                                    <div style='padding: 8px'>
+                                                        <canvas id='flagModePreview' class='pfpModePreview' width=32 height=32></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Export settings and stuff -->
+                                            <div class='exportDiv'>
+                                                <div>
+                                                    <div style='height: 12px'></div>
+                                                    <button id='exportButton' class='button greenButton'>
+                                                        Export and Open Image
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Upload div -->
+                    <div id='uploadDiv' class='mainBox' style='display: none'>
+                        <div class='bigLayer' style='overflow-y: hidden'>
+                            <span>
+                                Drag and drop an image with <span class="highlight">Flag PFP Maker</span>!<br>
+                                (or click that icon)
+                            </span>
+                            <hr class='line'>
+
+                            <!-- Upload image -->
+                            <div class='centerImgFrame'>
+                                <span class='centerImgHelper'></span>
+
+                                <input type='file' id='uploadButton' style='display: none'>
+                                <label for='uploadButton'>
+                                    <img src='src/assets/upload.png' id='uploadButton' class='centerImg uploadImg' draggable='false'>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export div -->
+                    <div id='exportDiv' class='mainBox' style='display: none'>
+                        <div class='bigLayer' style='overflow-y: hidden'>
+                            <span>
+                                Right click and save the image with <span class="highlight">Flag PFP Maker</span>!<br>
+                                (tap and hold if on mobile)
+                            </span>
+                            <hr class='line'>
+
+                            <div id='continueEditing' class='button otherFlagButton'>
+                                <span>Continue</span>
+                                <br><span>Editing</span>
+                            </div>
+
+                            <!-- Upload image -->
+                            <div class='centerImgFrame'>
+                                <span class='centerImgHelper'></span>
+                                <img id='exportEl' class='exportImg'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <div class="section-title">
+                <h2>Main Features</h2>
+                <p>Flag PFP Maker offers a variety of easy-to-use features to make your profile picture more personalized!</p>
+            </div>
+            <div class="features-container">
+                <div class="feature-item">
+                    <div class="feature-icon">🏳️</div>
+                    <h3>Multiple Flag Options</h3>
+                    <p>Various flag options to meet your personalization needs</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Custom Flags</h3>
+                    <p>Upload your own flag images to create fully customized profile pictures</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🖼️</div>
+                    <h3>High-Quality Export</h3>
+                    <p>Export your new profile picture in high-resolution format</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Use Section -->
+        <div class="how-to-use-section">
+            <div class="section-title">
+                <h2>How to Use Flag PFP Maker</h2>
+                <p>Create your personalized flag profile picture in just three simple steps!</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Select a Flag</h3>
+                        <p>Choose from our collection of flags to customize your profile picture with <span class="highlight">Flag PFP Maker</span>.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Adjust Settings</h3>
+                        <p>Use our simple controls to adjust image position, zoom, and ring scale.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Export</h3>
+                        <p>Click the export button to download your new profile picture created with <span class="highlight">Flag PFP Maker</span>!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions about <span class="highlight">Flag PFP Maker</span></p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is <span class="highlight">Flag PFP Maker</span>?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Flag PFP Maker is a free tool for creating custom profile pictures with flag overlays. It's perfect for showing support or expressing identity.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I upload my own image?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Click the "Choose New Image" button and select your image file, or simply drag and drop your image onto the upload area.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What's the difference between Ring and Background mode?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ring mode places the flag in a ring around your image, while Background mode places the flag behind your image.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I use my own custom flag?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Click the "Custom Image" button to upload your own flag image with <span class="highlight">Flag PFP Maker</span>.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is <span class="highlight">Flag PFP Maker</span> free to use?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, Flag PFP Maker is completely free to use without any restrictions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="privacy.html">Privacy Policy</a> | 
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2025 <span class="highlight">Flag PFP Maker</span>. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Index script -->
+        <script src='src/index.js'></script>
+        
+        <!-- Initialization script -->
+        <script src='src/init.js'></script>
+
+        <!-- FAQ interaction script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const faqItems = document.querySelectorAll('.faq-question');
+                
+                faqItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        const parent = this.parentNode;
+                        const answer = this.nextElementSibling;
+                        const toggle = this.querySelector('.faq-toggle');
+                        
+                        // Check if already open
+                        const isOpen = parent.classList.contains('active');
+                        
+                        // Close all other FAQ items
+                        document.querySelectorAll('.faq-item').forEach(faq => {
+                            faq.classList.remove('active');
+                            faq.querySelector('.faq-answer').style.maxHeight = null;
+                            faq.querySelector('.faq-toggle').textContent = '+';
+                        });
+                        
+                        // If current item is not open, open it
+                        if (!isOpen) {
+                            parent.classList.add('active');
+                            answer.style.maxHeight = answer.scrollHeight + 'px';
+                            toggle.textContent = '-';
+                        }
+                    });
+                });
+            });
+        </script>
+
+    </body>
+</html>
