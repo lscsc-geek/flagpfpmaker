@@ -218,7 +218,10 @@ html, body {
 
 /* ------------------------ / Export Div */
 .exportImg {
-    height: 70%;
+    max-width: 400px;
+    max-height: 400px;
+    width: auto;
+    height: auto;
     border-radius: 2px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 20px 30px;
 }

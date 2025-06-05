@@ -60,7 +60,8 @@ function loadImgFromFile(file, callback) {
 }
 
 function getCanvasUrl(canvas) {
-    return mainCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+    // 使用原始画布尺寸的图片，不修改MIME类型
+    return mainCanvas.toDataURL('image/png');
 }
 
 const canvasRefreshCooldown = 25;
@@ -390,6 +391,18 @@ uploadButton.onchange = function() {
 // continue editing from export div
 continueEditing.onclick = function() {
     selectDiv(editorDiv);
+};
+
+// 下载按钮事件处理
+const downloadButton = document.getElementById('downloadButton');
+downloadButton.onclick = function() {
+    // 创建一个临时的a元素
+    const a = document.createElement('a');
+    a.href = exportEl.src;
+    a.download = 'flag-pfp.png'; // 设置下载的文件名
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 };
 
 // Start with a default transparent image
