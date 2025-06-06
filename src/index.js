@@ -53,8 +53,15 @@ function selectDiv(div) {
 
 function loadImgFromFile(file, callback) {
     const img = new Image();
-    img.onload = () => callback(img);
-    img.onerror = () => alert('bitch the fuck did u give me !');
+    img.onload = () => {
+        callback(img);
+        
+        // 如果去背景功能已开启，自动处理去背景
+        if (editor && editor.useRemovedBg) {
+            handleImageRemoveBg(file);
+        }
+    };
+    img.onerror = () => alert('Image loading failed. Please try again.');
 
     img.src = URL.createObjectURL(file); // set src to blob url
 }
@@ -292,11 +299,21 @@ function defaultInputValues() {
     imgScaleInput.value = imgScale;
     ringScaleInput.value = ringScale;
 
-    // on and off is reversed for me,
-    // can't bother fixing... so 'not' !
-    
-    //console.log(editor.bgMode, !editor.bgMode ? 'true' : 'false');
+    // 设置flag mode toggle的状态
     flagModeToggleHandle.setAttribute('on', !editor.bgMode ? 'true' : 'false');
+    
+    // 更新flag mode文本
+    if (editor.bgMode)
+        flagModeText.innerHTML = 'flag mode: background';
+    else
+        flagModeText.innerHTML = 'flag mode: ring';
+    
+    // 设置remove background toggle的状态
+    removeBgToggleHandle.setAttribute('on', editor.useRemovedBg ? 'true' : 'false');
+    
+    // 更新remove background文本
+    removeBgText.innerHTML = `Remove Background: ${editor.useRemovedBg ? 'ON' : 'OFF'}`;
+    
     setFlagModeCanvas();
 }
 
@@ -405,14 +422,157 @@ downloadButton.onclick = function() {
     document.body.removeChild(a);
 };
 
-// Start with a default transparent image
+// 使用默认图片启动
 window.onload = function() {
-    const defaultImage = createTransparentImage(500, 500);
+    const defaultImage = new Image();
+    defaultImage.src = 'src/assets/default.jpeg';
     defaultImage.onload = function() {
         onPfpUpload(defaultImage);
-        // Set to flag mode by default
-        setFlagMode(false); // false = ring mode
+        
+        // 将默认图片转换为Blob并处理去背景
+        const canvas = document.createElement('canvas');
+        canvas.width = defaultImage.width;
+        canvas.height = defaultImage.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(defaultImage, 0, 0);
+        
+        canvas.toBlob(async function(blob) {
+            if (blob) {
+                await handleImageRemoveBg(blob);
+            }
+        }, 'image/jpeg');
     };
+};
+
+// 生成随机边界字符串
+function generateBoundary() {
+    return '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
+}
+
+// 去背景API调用函数
+async function removeBackground(imageFile) {
+    // 显示加载指示器
+    const loadingIndicator = document.getElementById('removeBgLoadingIndicator');
+    loadingIndicator.style.display = 'block';
+    
+    try {
+        // 生成随机boundary
+        const boundary = generateBoundary();
+        
+        // 创建FormData
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        
+        // 发送API请求
+        const response = await fetch('https://demo.api4ai.cloud/img-bg-removal/v1/people/results?mode=fg-image', {
+            method: 'POST',
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36',
+                'a4a-client-app-id': 'api4.ai_people_bg_removal',
+                'a4a-client-user-id': '6a0c49fd-3595-4db0-b2fb-7951935c6eff',
+                'priority': 'u=1, i'
+                // 注意：使用FormData时不要手动设置Content-Type，浏览器会自动添加正确的boundary
+            },
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('API request failed');
+        }
+        
+        // 解析返回的JSON数据
+        const data = await response.json();
+        
+        // 获取base64图像数据
+        if (data.results && 
+            data.results[0] && 
+            data.results[0].entities && 
+            data.results[0].entities[0] && 
+            data.results[0].entities[0].image) {
+            
+            const base64Image = data.results[0].entities[0].image;
+            return base64Image;
+        } else {
+            throw new Error('Invalid response format');
+        }
+    } catch (error) {
+        console.error('Background removal failed:', error);
+        alert('Background removal failed. Please try again.');
+        return null;
+    } finally {
+        // 隐藏加载指示器
+        loadingIndicator.style.display = 'none';
+    }
+}
+
+// 处理去背景图像
+function processRemovedBgImage(base64Image) {
+    if (!base64Image) return;
+    
+    // 创建新图像对象
+    const img = new Image();
+    img.onload = function() {
+        // 更新编辑器中的图像
+        editor.setRemovedBgImage(img);
+        editor.refreshCanvas();
+    };
+    
+    // 设置图像源
+    img.src = `data:image/png;base64,${base64Image}`;
+}
+
+// 切换去背景状态
+function toggleRemoveBg(value) {
+    // 更新开关状态
+    const removeBgToggleHandle = document.getElementById('removeBgToggleHandle');
+    removeBgToggleHandle.setAttribute('on', value ? 'true' : 'false');
+    
+    // 更新文本
+    const removeBgText = document.getElementById('removeBgText');
+    removeBgText.innerHTML = `Remove Background: ${value ? 'ON' : 'OFF'}`;
+    
+    // 更新编辑器状态
+    if (editor) {
+        editor.useRemovedBg = value;
+        editor.refreshCanvas();
+    }
+}
+
+// 处理图片文件去背景
+async function handleImageRemoveBg(file) {
+    const base64Image = await removeBackground(file);
+    if (base64Image) {
+        processRemovedBgImage(base64Image);
+        // 自动开启去背景模式
+        toggleRemoveBg(true);
+    }
+}
+
+// 获取去背景开关元素
+const removeBgToggle = document.getElementById('removeBgToggle');
+const removeBgToggleHandle = document.getElementById('removeBgToggleHandle');
+const removeBgText = document.getElementById('removeBgText');
+
+// 去背景开关点击事件
+removeBgToggle.onclick = function() {
+    // 如果没有去背景图像，则尝试处理当前图像
+    if (!editor.removedBgImg && editor.pfpImg) {
+        // 将图像转换为Blob
+        const canvas = document.createElement('canvas');
+        canvas.width = editor.pfpImg.width;
+        canvas.height = editor.pfpImg.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(editor.pfpImg, 0, 0);
+        
+        canvas.toBlob(async function(blob) {
+            if (blob) {
+                await handleImageRemoveBg(blob);
+            }
+        }, 'image/jpeg');
+    } else {
+        // 切换去背景状态
+        toggleRemoveBg(!editor.useRemovedBg);
+    }
 };
 
 //};

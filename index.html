@@ -86,7 +86,7 @@
 
                                         <canvas id='mainCanvas' class='pfpPreview' width='500' height='500'></canvas>
                                         <button id='chooseNewButton' class='button newImgButton prominentButton'>
-                                            Choose New Image
+                                            Choose Your Image
                                         </button>
                                     </div>
                                     
@@ -151,6 +151,24 @@
                                                 </div>
                                             </div>
                                             <br>
+                                            <br>
+
+                                            <div class='flagButtonDiv'>
+                                                <!-- 去背景功能开关 -->
+                                                <span id='removeBgText'>Remove Background: ON</span>
+
+                                                <div class='verticalCenter'>
+                                                    <!-- 去背景开关 -->
+                                                    <div id='removeBgToggle' class='toggle'>
+                                                        <div id='removeBgToggleHandle' class='toggleHandle'></div>
+                                                    </div>
+                                                    <!-- 去背景预览 -->
+                                                    <div style='padding: 8px'>
+                                                        <div id='removeBgLoadingIndicator' style='display: none; font-size: 12px;'>Processing...</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <br>
 
                                             <div class='flagButtonDiv'>
