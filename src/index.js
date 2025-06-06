@@ -425,7 +425,7 @@ downloadButton.onclick = function() {
 // 使用默认图片启动
 window.onload = function() {
     const defaultImage = new Image();
-    defaultImage.src = 'src/assets/default.jpeg';
+    defaultImage.src = 'src/assets/default.png';
     defaultImage.onload = function() {
         onPfpUpload(defaultImage);
         
